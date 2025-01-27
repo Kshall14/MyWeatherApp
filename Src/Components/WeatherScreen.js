@@ -29,7 +29,7 @@ const backgroundImage = getBackgroundImage(currentWeather.weather[0].description
       <Text style ={styles.feelsLikeText}>L: {Math.round(currentWeather.main.temp_min)}°F</Text>
       </View>
 
-      <View style={styles.forecastContainer}>
+      <View style={styles.foreCastContainter}>
       <FlatList
         data={next24Hours}
         renderItem={({ item }) => (
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     viewStyle:{
          flex:1,
          justifyContent:'flex-start',
-         backgroundColor:"black"
+         backgroundColor:"blue"
     },
     tempText:{
         fontSize:80,
@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     hourlyForecastContainer: {
-        marginHorizontal: 15,
+        marginHorizontal: 25,
         alignItems: 'center',
         justifyContent: 'center',
         height: 100,
-        backgroundColor: 'grey',
+        backgroundColor: 'rgba(255, 0, 255, 0.2)',
         borderRadius: "50",
       },
       timeText: {
@@ -125,21 +125,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
       },
       foreCastContainter:{
-        backgroundColor: 'blue',
+        backgroundColor: 'rgba(255, 0, 255, 0.2)',
         borderRadius: 10,
         padding: 20,
-        width: '80%',
-        height: 300,
+        width: '85%',
+        height: 150,
         alignSelf: 'center',
         marginBottom: 20,
         overflow: 'scroll',
+        alignContent:'center',        
       },
       dailyForecastContainer: {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        borderRadius: 10,
-        padding: 10,
-        marginHorizontal: 20,
-        marginTop: 20,
+        backgroundColor: 'rgba(255, 0, 255, 0.2)',
+        borderRadius: 20,
+        padding: 5,
+        marginHorizontal: 30,
+        marginTop: 5,
       },
       dailyForecastItem: {
         flexDirection: 'row',
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
+        
       },
       dayText: {
         fontSize: 18,
