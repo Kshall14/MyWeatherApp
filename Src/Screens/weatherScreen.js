@@ -1,11 +1,13 @@
-import React from 'react';
+import React,{ useContext } from 'react';
 import {View,Text,StyleSheet, SafeAreaView,ImageBackground,ScrollView,Image,FlatList} from 'react-native';
-import getBackgroundImage from './DynamicBackground';
-const WeatherScreen = ({route})=>{
-  const forecastData = route.params.weatherData;
-  const currentWeather = forecastData.list[0]; // Get the current weather data
-  const next24Hours = forecastData.list.slice(0, 8);
-  const next5Days = forecastData.list.slice(0, 40);
+import getBackgroundImage from '../Components/dynamicBackground';
+import { WeatherContext } from '../Context/weatherContext';
+const WeatherScreen = ()=>{
+  const { weatherData, location } = useContext(WeatherContext);
+  
+  const currentWeather = weatherData.list[0]; // Get the current weather data
+  const next24Hours = weatherData.list.slice(0, 8);
+  const next5Days = weatherData.list.slice(0, 40);
   const days = [];
 for (let i = 0; i < 5; i++) {
   const dayData = next5Days.slice(i * 8, (i + 1) * 8);
@@ -21,9 +23,10 @@ const backgroundImage = getBackgroundImage(currentWeather.weather[0].description
   return (
     <View style={styles.viewStyle}>
         <ImageBackground source={backgroundImage} style={styles.viewStyle}>
-      <Text style={styles.titleText}>{forecastData.city.name}</Text>
+      <Text style={styles.titleText}>{location}</Text>
       <Text style ={styles.tempText}>{Math.round(currentWeather.main.temp)}°F</Text>
-      <Text style = {styles.weatherDescription}>{currentWeather.weather[0].description}</Text>
+      
+      <Text style = {styles.feelsLikeText}>Feels Like:{Math.round(currentWeather.main.feels_like)}</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'center',paddingBottom:50 }}>
       <Text style ={styles.feelsLikeText}>H: {Math.round(currentWeather.main.temp_max)}°F     </Text>
       <Text style ={styles.feelsLikeText}>L: {Math.round(currentWeather.main.temp_min)}°F</Text>
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
         color:'white',
         fontSize: 10,
         textAlign: 'center',
+        fontSize:22,
     },
     weatherDescription:{
         color:'white',

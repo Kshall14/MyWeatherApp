@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import {View,Text,StyleSheet, SafeAreaView,TextInput} from 'react-native';
-import ExecuteButton from './ConfirmButton';
-import BackGround from './MainMenuBackground';
-import { getWeatherByCity } from './api';
+import ExecuteButton from '../Components/confirmButton';
+import BackGround from '../Components/mainMenuBackground';
+import { getWeatherByCity } from '../Components/api';
+import { WeatherContext } from '../Context/weatherContext';
 const MainMenuScreen = ({navigation}) => {
+  const { setLocation, fetchWeatherData } = useContext(WeatherContext);
   const [city, setCity] = useState('');
   console.log('Rendering MainMenuScreen');
+ 
   const handleButtonPress = async () => {
-    console.log('Button pressed');
-    const response = await getWeatherByCity(city);
-    console.log('Response:', response);
-    if (response.success) {
-      navigation.navigate('Weather', { weatherData: response.data });
-    } else {
-      console.error('Error fetching weather data');
+    try {
+      const response = await fetchWeatherData(city);
+      if (response.success) {
+       // setWeatherData(response.data);
+        setLocation(city);
+        navigation.navigate('Weather');
+      } else {
+        console.error('Error fetching weather data:', response.error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
     }
   };
     return (

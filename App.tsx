@@ -8,8 +8,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import WeatherScreen from './Src/Components/WeatherScreen';
-import MainMenuScreen from './Src/Components/MainMenuScreen';
+import WeatherScreen from './Src/Screens/weatherScreen';
+import MainMenuScreen from './Src/Screens/mainMenuScreen';
+import { WeatherProvider } from './Src/Context/weatherContext';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -21,21 +22,18 @@ import {
   View,
 } from 'react-native';
 
-const Stack = createNativeStackNavigator({
-  screens:{
-    MainMenu:MainMenuScreen,
-    Weather:WeatherScreen,
-  }
-});
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
  return(
-  <NavigationContainer>
-  <Stack.Navigator>
-    <Stack.Screen name="Main Menu" component={MainMenuScreen} />
-    <Stack.Screen name="Weather" component={WeatherScreen} />
-  </Stack.Navigator>
-</NavigationContainer>
+  <WeatherProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Main Menu" component={MainMenuScreen} />
+          <Stack.Screen name="Weather" component={WeatherScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </WeatherProvider>
   );
 }
 
